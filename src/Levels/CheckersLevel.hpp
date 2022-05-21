@@ -6,9 +6,7 @@
 
 #include <Panda.hpp>
 
-class CheckersLevel: public Panda::Level {
+class CheckersLevel : public Panda::Level {
 public:
     void start(Panda::World *world) override;
 };
-
-

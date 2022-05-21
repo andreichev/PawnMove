@@ -25,7 +25,7 @@ file(GLOB RESOURCE_FOLDERS
         )
 
 if (DESKTOP)
-    file(GLOB RESOURCE_DESKTOP_FOLDERS resources/pc/*)
+    file(GLOB RESOURCE_DESKTOP_FOLDERS resources/desktop/*)
     list (APPEND RESOURCE_FOLDERS "${RESOURCE_DESKTOP_FOLDERS}")
 elseif(PLATFORM_IOS)
     file(GLOB RESOURCE_IOS_FOLDERS resources/ios/*)
