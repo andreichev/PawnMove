@@ -3,10 +3,31 @@
 //
 
 #include "CheckersLevel.hpp"
-#include "Components/CubeRenderer.hpp"
+#include "MeshGenerator/MeshGenerator.hpp"
 
 void CheckersLevel::start(Panda::World *world) {
-    Panda::Shared<Panda::Entity> entity = world->instantiateEntity();
-    Panda::Shared<CubeRenderer> cubeComponent = Panda::makeShared<CubeRenderer>(glm::vec3(0.0), glm::vec3(1.0));
-    entity->addComponent(cubeComponent);
+    Panda::TextureHandle texture = Panda::Miren::createTexture(
+            "textures/ChessBoard.png"
+            );
+    Panda::ShaderHandle shader = Panda::Miren::createShader(
+            "shaders/base/base_vertex.glsl",
+            "shaders/base/base_fragment.glsl"
+            );
+
+    // Create camera
+    Panda::Shared<Panda::Entity> cameraEntity = world->instantiateEntity();
+    Panda::Camera *camera = new Panda::Camera();
+    cameraEntity->addComponent(camera);
+    camera->setFieldOfView(60.f);
+    camera->setShader(shader);
+
+    // Move camera
+    cameraEntity->getTransform()->setPosition(0, 6, 7);
+    cameraEntity->getTransform()->setRotation(45, 0, 0);
+
+    // Create board
+    Panda::Shared<Panda::Entity> boardEntity = world->instantiateEntity();
+    Panda::MeshData boardMeshData = MeshGenerator::plane(glm::vec3(8, 8, 8));
+    Panda::Mesh* boardMesh = new Panda::Mesh(boardMeshData, false, texture, shader);
+    boardEntity->addComponent(boardMesh);
 }
